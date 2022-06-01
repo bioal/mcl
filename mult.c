@@ -13,13 +13,24 @@ void print_double(double array[], int n);
 void print_mat(double mat[][256], int n);
 /* Prototype Declaration End */
 
-int main(void) {
-    
+int main(int argc, char *argv[])
+{
+    char *program = argv[0];
+    char usage[BUFSIZ];
+    sprintf(usage,   "Usage: %s SCORE_MATRIX\n", "program");
+
+    if (argc != 2) {
+	fprintf(stderr, "%s", usage);
+	exit(1);
+    }
+    char score_matrix_file[BUFSIZ] = "";
+    strcpy(score_matrix_file, argv[1]);
+
     char key[256];
     int score[256][256];
     double mat[256][256];
     int sum[256];
-    int n = read_matrix("example/score", key, score);
+    int n = read_matrix(score_matrix_file, key, score);
     int i, j;
     for (j=0; j<n; j++) {
         for (i=0; i<n; i++) {
