@@ -33,7 +33,9 @@ int main(int argc, char *argv[]){
     double mat[256][256];
     int n = read_matrix(score_matrix_file, key, score);
     int i, j;
+    printf("M1\n");
     normalize_matrix(score, mat, n);
+    print_mat(mat, n);
 
     double mult[256][256];
     for (i=0; i<n; i++) {
@@ -41,13 +43,15 @@ int main(int argc, char *argv[]){
             mult[i][j] = expand_matrix(mat, n, i, j);
         }
     }
-    printf("\n");
+    printf("M2\n");
     print_mat(mult, n);
 
     double sq[256][256];
     double sq_norm[256][256];
     square_matrix(mult, sq, n);
     normalize_matrix_double(sq, sq_norm, n);
+    printf("G(M2)\n");
+    print_mat(sq_norm, n);
 
     return 0;
 }
@@ -67,7 +71,6 @@ void normalize_matrix(int score[][256], double mat[][256], int n)
             mat[i][j] = (double)score[i][j]/sum[j];
         }
     }
-    print_mat(mat, n);
 }
 
 void normalize_matrix_double(double score[][256], double mat[][256], int n)
@@ -86,8 +89,6 @@ void normalize_matrix_double(double score[][256], double mat[][256], int n)
             mat[i][j] = score[i][j]/sum[j];
         }
     }
-    printf("\n");
-    print_mat(mat, n);
 }
 
 void square_matrix(double mat[][256], double mat2[][256], int n)
