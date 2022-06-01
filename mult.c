@@ -4,6 +4,9 @@
 #include <string.h>
 
 /* Prototype Declaration */
+void normalize_matrix(int score[][256], double mat[][256], int n);
+void normalize_matrix_double(double score[][256], double mat[][256], int n);
+void square_matrix(double mat[][256], double mat2[][256], int n);
 double expand_matrix(double mat[][256], int n, int i, int j);
 int read_matrix(char *file, char key[], int mat[][256]);
 int split_char(char *line, char array[]);
@@ -13,8 +16,7 @@ void print_double(double array[], int n);
 void print_mat(double mat[][256], int n);
 /* Prototype Declaration End */
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]){
     char *program = argv[0];
     char usage[BUFSIZ];
     sprintf(usage,   "Usage: %s SCORE_MATRIX\n", "program");
@@ -29,9 +31,31 @@ int main(int argc, char *argv[])
     char key[256];
     int score[256][256];
     double mat[256][256];
-    int sum[256];
     int n = read_matrix(score_matrix_file, key, score);
     int i, j;
+    normalize_matrix(score, mat, n);
+
+    double mult[256][256];
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            mult[i][j] = expand_matrix(mat, n, i, j);
+        }
+    }
+    printf("\n");
+    print_mat(mult, n);
+
+    double sq[256][256];
+    double sq_norm[256][256];
+    square_matrix(mult, sq, n);
+    normalize_matrix_double(sq, sq_norm, n);
+
+    return 0;
+}
+
+void normalize_matrix(int score[][256], double mat[][256], int n)
+{
+    int i, j;
+    int sum[256];
     for (j=0; j<n; j++) {
         for (i=0; i<n; i++) {
             sum[j] += score[i][j];
@@ -44,17 +68,36 @@ int main(int argc, char *argv[])
         }
     }
     print_mat(mat, n);
+}
 
-    double mult[256][256];
+void normalize_matrix_double(double score[][256], double mat[][256], int n)
+{
+    int i, j;
+    double sum[256];
+    for (j=0; j<n; j++) {
+        sum[j] = 0;
+        for (i=0; i<n; i++) {
+            sum[j] += score[i][j];
+        }
+    }
+
     for (i=0; i<n; i++) {
         for (j=0; j<n; j++) {
-            mult[i][j] = expand_matrix(mat, n, i, j);
+            mat[i][j] = score[i][j]/sum[j];
         }
     }
     printf("\n");
-    print_mat(mult, n);
+    print_mat(mat, n);
+}
 
-    return 0;
+void square_matrix(double mat[][256], double mat2[][256], int n)
+{
+    int i, j;
+    for (i=0; i<n; i++) {
+        for (j=0; j<n; j++) {
+            mat2[i][j] = mat[i][j] * mat[i][j];
+        }
+    }
 }
 
 double expand_matrix(double mat[][256], int n, int i, int j)
