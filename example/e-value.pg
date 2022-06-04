@@ -1,0 +1,16 @@
+A :Protein
+B :Protein
+C :Protein
+D :Protein
+E :Protein
+F :Protein
+G :Protein
+A -- B E-value: 1E-50 width:5
+A -- C E-value: 1E-50 width:5
+B -- D E-value: 1E-60 width:6
+A -- D E-value: 1E-45 width:4.5
+C -- D E-value: 1E-40 width:4
+D -- E E-value: 1E-80 width:8
+D -- F E-value: 1E-70 width:7
+E -- F E-value: 1E-70 width:7
+D -- G E-value: 1E-15 width:1.5
