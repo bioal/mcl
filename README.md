@@ -1,8 +1,13 @@
 # Markov Clustering
 
+## Example
+![example/e-value.png](example/e-value.png)
+
+
 ```
 ./mult.c example/e-value
 ```
+
 -log10(E-value)
 ```
 100  50   50   45   0    0    0
